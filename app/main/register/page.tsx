@@ -48,22 +48,28 @@ export default function Register() {
     <>
       <NavigationBar />
       <BackgroundWrapper>
-        <section className="flex flex-col items-center justify-center min-h-screen px-4">
-          <div className="bg-white/90 shadow-xl rounded-2xl p-8 max-w-md w-full mt-16 mb-16">
-            <h1 className="text-3xl font-extrabold text-gray-800 mb-2 text-center">
-              Register
+        <section className="flex flex-col items-center justify-center min-h-screen px-4  dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+          <div className="relative bg-white/90 dark:bg-gray-900/90 shadow-2xl rounded-3xl p-10 max-w-md w-full mt-16 mb-16 overflow-hidden">
+            {/* Decorative gradient blur */}
+            <div className="absolute -top-10 -left-10 w-32 h-32 bg-orange-400 opacity-20 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-400 opacity-20 rounded-full blur-2xl pointer-events-none" />
+            <h1 className="text-3xl font-extrabold text-gray-800 dark:text-gray-100 mb-2 text-center tracking-tight">
+              Create Your Account
             </h1>
-            <p className="text-gray-600 text-center mb-8">
-              Create your account to start adopting!
+            <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
+              Start your adoption journey with us!
             </p>
             {submitted ? (
-              <div className="text-green-600 text-center font-semibold py-8">
-                Registration successful! You can now <a href="/main/login" className="text-orange-600 underline">login</a>.
+              <div className="text-green-600 dark:text-green-400 text-center font-semibold py-8">
+                Registration successful! You can now{" "}
+                <a href="/main/login" className="text-orange-600 dark:text-orange-400 underline">
+                  login
+                </a>.
               </div>
             ) : (
               <form className="space-y-6" onSubmit={handleSubmit} autoComplete="off">
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1" htmlFor="name">
+                  <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="name">
                     Name
                   </label>
                   <input
@@ -72,12 +78,12 @@ export default function Register() {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                     placeholder="Your Name"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1" htmlFor="email">
+                  <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="email">
                     Email
                   </label>
                   <input
@@ -86,12 +92,12 @@ export default function Register() {
                     value={form.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                     placeholder="you@email.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1" htmlFor="password">
+                  <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="password">
                     Password
                   </label>
                   <input
@@ -101,12 +107,12 @@ export default function Register() {
                     onChange={handleChange}
                     required
                     minLength={6}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                     placeholder="Your password"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1" htmlFor="contact">
+                  <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="contact">
                     Contact Number
                   </label>
                   <input
@@ -116,11 +122,11 @@ export default function Register() {
                     onChange={handleChange}
                     required
                     pattern="^(\+639|09)\d{9}$"
-                    className={`w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition ${
+                    className={`w-full px-4 py-2 border ${
                       form.contact && !isValidPHNumber(form.contact)
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`}
+                        ? "border-red-500 dark:border-red-500"
+                        : "border-gray-300 dark:border-gray-700"
+                    } rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition`}
                     placeholder="09XXXXXXXXX or +639XXXXXXXXX"
                   />
                   {form.contact && !isValidPHNumber(form.contact) && (
@@ -130,11 +136,11 @@ export default function Register() {
                   )}
                 </div>
                 {error && (
-                  <div className="text-red-500 text-sm text-center">{error}</div>
+                  <div className="text-red-500 dark:text-red-400 text-sm text-center">{error}</div>
                 )}
                 <button
                   type="submit"
-                  className="w-full py-3 rounded bg-orange-600 hover:bg-orange-700 text-white font-semibold transition-all duration-200"
+                  className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-semibold shadow-lg transition-all duration-200 flex items-center justify-center"
                   disabled={
                     !form.name ||
                     !form.email ||
@@ -148,9 +154,9 @@ export default function Register() {
                 </button>
               </form>
             )}
-            <p className="mt-6 text-center text-gray-600 text-sm">
+            <p className="mt-6 text-center text-gray-600 dark:text-gray-300 text-sm">
               Already have an account?{" "}
-              <a href="/main/login" className="text-orange-600 hover:underline font-semibold">
+              <a href="/main/login" className="text-orange-600 dark:text-orange-400 hover:underline font-semibold">
                 Login
               </a>
             </p>

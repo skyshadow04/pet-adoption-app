@@ -10,7 +10,7 @@ export default function BackgroundWrapper({ children }: { children: React.ReactN
           backgroundImage: "url('https://cjzyc1shhmqalkdp.public.blob.vercel-storage.com/assets/front-end-assets/bg-login-lqI7fxAJLzJXrRNKEm2tehX9fC8n6O.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.4, // Only the image is faded
+          opacity: 0.6, // Only the image is faded
           zIndex: 0,
         }}
         aria-hidden="true"
