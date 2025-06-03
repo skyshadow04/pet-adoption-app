@@ -102,9 +102,13 @@ export default function NavigationBar() {
           </button>
         </div>
         {/* Navigation links */}
-        <ul className={`flex-col sm:flex-row sm:flex space-y-2 sm:space-y-0 sm:space-x-4 absolute sm:static bg-white/95 dark:bg-gray-900/95 left-0 w-full sm:w-auto top-16 sm:top-auto transition-all duration-200 ${
-          menuOpen ? "flex" : "hidden"
-        } sm:flex rounded-b-2xl sm:rounded-none shadow-lg sm:shadow-none`}>
+        <ul 
+           className={`${
+            menuOpen
+              ? "flex flex-col justify-center items-center text-center absolute left-0 w-full bg-white/95 dark:bg-gray-900/95 top-16 z-40 space-y-2 rounded-b-2xl shadow-lg"
+              : "hidden"
+            } sm:static sm:flex sm:flex-row sm:space-x-4 sm:space-y-0 sm:bg-transparent sm:shadow-none sm:rounded-none transition-all duration-200`}
+          >
           <li>
             <Link
               href="/"
