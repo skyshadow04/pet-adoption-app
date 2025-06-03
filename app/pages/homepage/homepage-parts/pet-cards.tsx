@@ -11,7 +11,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
@@ -22,7 +22,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
@@ -33,7 +33,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
@@ -44,7 +44,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
@@ -55,7 +55,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
@@ -66,7 +66,7 @@ export default function PetCards() {
                         alt="Pet 1"
                         width={500}
                         height={400}
-                        className="rounded-t-lg mb-4"></Image>
+                        className="rounded-t-lg mb-4 w-full h-100 object-cover"></Image>
                     <h2 className="text-xl font-semibold">Buddy</h2>
                     <p>Breed: Golden Retriever</p>
                     <p>Age: 2 years</p>
