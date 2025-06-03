@@ -4,7 +4,7 @@ export default function Jumbotron() {
     <>
       <div className="relative z-0 before:absolute before:w-full before:h-full before:inset-0 before:bg-black/50 before:z-10">
         <Image 
-          src="/assets/jumbotron/bg-jtn.jpg" 
+          src="https://cjzyc1shhmqalkdp.public.blob.vercel-storage.com/assets/jumbotron/bg-jtn-7pO5tRwUcdXjc0IKFM4QiRDAmIk4lr.jpg" 
           alt="Banner Image"
           width={1920} 
           height={1080} 
