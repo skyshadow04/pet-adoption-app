@@ -8,7 +8,7 @@ export default function About() {
         <div className="bg-white/90 shadow-xl rounded-2xl p-10 max-w-2xl w-full mt-16 mb-16">
           <div className="flex flex-col items-center mb-6">
             <img
-              src="/assets/about-assets/about-1.jpg"
+              src="https://cjzyc1shhmqalkdp.public.blob.vercel-storage.com/assets/about-assets/about-1-G77PccuMJlaLJL837ggwbf85I8P6w7.jpg"
               alt="About Pet Adoption"
               className="w-24 h-24 mb-4"
             />

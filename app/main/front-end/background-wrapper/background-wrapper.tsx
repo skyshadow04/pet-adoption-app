@@ -7,7 +7,7 @@ export default function BackgroundWrapper({ children }: { children: React.ReactN
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: "url('/assets/front-end-assets/bg-login.jpg')",
+          backgroundImage: "url('https://cjzyc1shhmqalkdp.public.blob.vercel-storage.com/assets/front-end-assets/bg-login-lqI7fxAJLzJXrRNKEm2tehX9fC8n6O.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.4, // Only the image is faded
