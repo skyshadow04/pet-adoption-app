@@ -41,7 +41,7 @@ export default function FAQ() {
               <span>{openIndex === idx ? "−" : "+"}</span>
             </button>
             {openIndex === idx && (
-              <div className="px-4 pb-4 text-gray-700">{item.answer}</div>
+              <div className="px-4 pb-4">{item.answer}</div>
             )}
           </div>
         ))}

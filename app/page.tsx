@@ -5,7 +5,7 @@ import Footer from './pages/parts/footer/footer';
 export default function Home() {
   return (
     <>
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen">
       <NavigationBar />
       <main className="flex-grow">
         <Homepage />

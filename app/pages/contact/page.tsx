@@ -24,12 +24,15 @@ export default function Contact() {
   return (
     <>
       <NavigationBar />
-      <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-orange-100 px-4">
-        <div className="bg-white/90 shadow-xl rounded-2xl p-10 max-w-xl w-full mt-16 mb-16">
-          <h1 className="text-3xl font-extrabold text-gray-800 mb-2 text-center">
+      <section className="flex flex-col items-center justify-center min-h-screen dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4">
+        <div className="relative bg-white/90 dark:bg-gray-900/90 shadow-2xl rounded-3xl p-10 max-w-xl w-full mt-16 mb-16 overflow-hidden">
+          {/* Decorative gradient blur */}
+          <div className="absolute -top-10 -left-10 w-32 h-32 bg-orange-400 opacity-20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-400 opacity-20 rounded-full blur-2xl pointer-events-none" />
+          <h1 className="text-3xl font-extrabold text-gray-800 dark:text-gray-100 mb-2 text-center">
             Contact Us
           </h1>
-          <p className="text-gray-600 text-center mb-8">
+          <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
             Have questions or want to get in touch? Fill out the form below and our team will respond soon!
           </p>
           <form
@@ -38,7 +41,7 @@ export default function Contact() {
             autoComplete="off"
           >
             <div>
-              <label className="block text-gray-700 font-semibold mb-1" htmlFor="name">
+              <label className="block text-gray-700 dark:text-gray-900 font-semibold mb-1" htmlFor="name">
                 Name
               </label>
               <input
@@ -46,12 +49,12 @@ export default function Contact() {
                 name="name"
                 type="text"
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                 placeholder="Your Name"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1" htmlFor="email">
+              <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="email">
                 Email
               </label>
               <input
@@ -59,12 +62,12 @@ export default function Contact() {
                 name="email"
                 type="email"
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                 placeholder="you@email.com"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1" htmlFor="message">
+              <label className="block text-gray-700 dark:text-gray-200 font-semibold mb-1" htmlFor="message">
                 Message
               </label>
               <textarea
@@ -72,13 +75,13 @@ export default function Contact() {
                 name="message"
                 required
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition"
                 placeholder="How can we help you?"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-3 rounded bg-orange-600 hover:bg-orange-700 text-white font-semibold transition-all duration-200 flex items-center justify-center"
+              className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-semibold transition-all duration-200 flex items-center justify-center shadow-lg"
               disabled={isPending}
             >
               {isPending ? (
@@ -94,10 +97,10 @@ export default function Contact() {
               )}
             </button>
             {success && (
-              <div className="text-green-600 text-center font-semibold">{success}</div>
+              <div className="text-green-600 dark:text-green-400 text-center font-semibold">{success}</div>
             )}
             {error && (
-              <div className="text-red-600 text-center font-semibold">{error}</div>
+              <div className="text-red-600 dark:text-red-400 text-center font-semibold">{error}</div>
             )}
           </form>
         </div>
