@@ -1,6 +1,6 @@
 "use client";
 import NavigationBar from '../parts/navigation/navigation-bar';
-import { handleContact } from '@/app/main/contact-backend/handle-contact';
+import { handleContact } from '@/app/main/backend/contact-backend/handle-contact';
 import { useState, useTransition } from "react";
 
 export default function Contact() {
