@@ -3,7 +3,11 @@ import React from "react";
 export default function BackgroundWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
-      {/* Background image layer */}
+      {/* 
+      
+      Background image layer for the login and register pages.
+      
+      */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{

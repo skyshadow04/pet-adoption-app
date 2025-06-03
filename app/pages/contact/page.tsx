@@ -1,25 +1,56 @@
 "use client";
 import NavigationBar from '../parts/navigation/navigation-bar';
-import { handleContact } from '@/app/main/backend/contact-backend/handle-contact';
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 export default function Contact() {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = (formData: FormData) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setSuccess(null);
     setError(null);
-    startTransition(async () => {
-      const result = await handleContact(formData);
-      if (result?.ok) {
+    setIsPending(true);
+
+    // Store a reference to the form
+    const form = e.currentTarget;
+
+    const formData = new FormData(form);
+    const name = String(formData.get("name") || "");
+    const email = String(formData.get("email") || "");
+    const message = String(formData.get("message") || "");
+
+    if (!name || !email || !message) {
+      setError("Please fill in all fields.");
+      setIsPending(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/contact-api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const data = await res.json();
+      console.log("Contact API response:", data);
+      if (data.ok) {
         setSuccess("Thank you! Your message has been sent.");
+        setError(null);
+        form.reset(); // Use the stored reference
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(data.error || "Something went wrong. Please try again.");
+        setSuccess(null);
       }
-    });
-  };
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+      setSuccess(null);
+      console.error("Contact API error:", err);
+    } finally {
+      setIsPending(false);
+    }
+};
 
   return (
     <>
@@ -37,7 +68,7 @@ export default function Contact() {
           </p>
           <form
             className="space-y-6"
-            action={onSubmit}
+            onSubmit={onSubmit}
             autoComplete="off"
           >
             <div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const APP_NAME = "Pet Adoption App";
 
@@ -10,15 +10,32 @@ export default function NavigationBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const [darkMode, setDarkMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
-  // On mount, check localStorage for dark mode preference
-  useEffect(() => {
+  // On mount, check localStorage for dark mode and login state
+ useEffect(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("theme");
       if (stored === "dark") {
         setDarkMode(true);
         document.documentElement.classList.add("dark");
       }
+      setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+
+      // Listen for changes to localStorage (cross-tab and in-app)
+      const handleStorage = () => {
+        setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+      };
+      window.addEventListener("storage", handleStorage);
+
+      // Listen for custom event in the same tab
+      window.addEventListener("loginStatusChanged", handleStorage);
+
+      return () => {
+        window.removeEventListener("storage", handleStorage);
+        window.removeEventListener("loginStatusChanged", handleStorage);
+      };
     }
   }, []);
 
@@ -40,15 +57,22 @@ export default function NavigationBar() {
   // Helper to check if the current path matches the link
   const isActive = (href: string) => pathname === href;
 
+  // Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    window.dispatchEvent(new Event("loginStatusChanged"));
+    router.push("/");
+  };
+
   return (
-    <nav className="bg-gray-800 p-4 sticky top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="text-white text-lg font-semibold">{APP_NAME}</div>
-          {/* Dark mode button beside app name */}
+    <nav className="bg-white/90 dark:bg-gray-900/90 backdrop-blur shadow-md sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center py-3 px-4">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-extrabold text-orange-600 dark:text-orange-400 tracking-tight">{APP_NAME}</span>
           <button
             onClick={toggleDarkMode}
-            className="ml-2 p-2 rounded-full bg-gray-700 hover:bg-gray-600 text-yellow-300 dark:text-gray-200 transition"
+            className="ml-2 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-orange-100 dark:hover:bg-gray-800 text-yellow-400 dark:text-gray-200 transition"
             aria-label="Toggle dark mode"
           >
             {darkMode ? (
@@ -68,25 +92,25 @@ export default function NavigationBar() {
         <div className="flex items-center gap-2">
           {/* Hamburger button for small screens */}
           <button
-            className="sm:hidden text-gray-300 hover:text-white focus:outline-none"
+            className="sm:hidden text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-200 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
         {/* Navigation links */}
-        <ul className={`flex-col sm:flex-row sm:flex space-y-2 sm:space-y-0 sm:space-x-4 absolute sm:static bg-gray-800 left-0 w-full sm:w-auto top-16 sm:top-auto transition-all duration-200 ${
+        <ul className={`flex-col sm:flex-row sm:flex space-y-2 sm:space-y-0 sm:space-x-4 absolute sm:static bg-white/95 dark:bg-gray-900/95 left-0 w-full sm:w-auto top-16 sm:top-auto transition-all duration-200 ${
           menuOpen ? "flex" : "hidden"
-        } sm:flex`}>
+        } sm:flex rounded-b-2xl sm:rounded-none shadow-lg sm:shadow-none`}>
           <li>
             <Link
               href="/"
-              className={`block px-4 py-2 ${
-                isActive("/") ? "text-orange-400 font-bold underline" : "text-gray-300"
-              } hover:text-white`}
+              className={`block px-4 py-2 rounded-xl ${
+                isActive("/") ? "text-orange-600 dark:text-orange-400 font-bold underline bg-orange-50 dark:bg-gray-800" : "text-gray-700 dark:text-gray-200"
+              } hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-100 dark:hover:bg-gray-800 transition`}
             >
               Home
             </Link>
@@ -94,9 +118,9 @@ export default function NavigationBar() {
           <li>
             <Link
               href="/pages/about"
-              className={`block px-4 py-2 ${
-                isActive("/pages/about") ? "text-orange-400 font-bold underline" : "text-gray-300"
-              } hover:text-white`}
+              className={`block px-4 py-2 rounded-xl ${
+                isActive("/pages/about") ? "text-orange-600 dark:text-orange-400 font-bold underline bg-orange-50 dark:bg-gray-800" : "text-gray-700 dark:text-gray-200"
+              } hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-100 dark:hover:bg-gray-800 transition`}
             >
               About
             </Link>
@@ -104,35 +128,45 @@ export default function NavigationBar() {
           <li>
             <Link
               href="/pages/contact"
-              className={`block px-4 py-2 ${
-                isActive("/pages/contact") ? "text-orange-400 font-bold underline" : "text-gray-300"
-              } hover:text-white`}
+              className={`block px-4 py-2 rounded-xl ${
+                isActive("/pages/contact") ? "text-orange-600 dark:text-orange-400 font-bold underline bg-orange-50 dark:bg-gray-800" : "text-gray-700 dark:text-gray-200"
+              } hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-100 dark:hover:bg-gray-800 transition`}
             >
               Contact
             </Link>
           </li>
-          {pathname !== "/main/login" && (
-            <li>
-              <Link
-                href="/main/login"
-                className={`block px-4 py-2 ${
-                  isActive("/main/login") ? "text-orange-400 font-bold underline" : "text-gray-300"
-                } hover:text-white`}
-              >
-                Login
-              </Link>
-            </li>
+          {!isLoggedIn && (
+            <>
+              <li>
+                <Link
+                  href="/main/login"
+                  className={`block px-4 py-2 rounded-xl ${
+                    isActive("/main/login") ? "text-orange-600 dark:text-orange-400 font-bold underline bg-orange-50 dark:bg-gray-800" : "text-gray-700 dark:text-gray-200"
+                  } hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-100 dark:hover:bg-gray-800 transition`}
+                >
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/main/register"
+                  className={`block px-4 py-2 rounded-xl ${
+                    isActive("/main/register") ? "text-orange-600 dark:text-orange-400 font-bold underline bg-orange-50 dark:bg-gray-800" : "text-gray-700 dark:text-gray-200"
+                  } hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-100 dark:hover:bg-gray-800 transition`}
+                >
+                  Register
+                </Link>
+              </li>
+            </>
           )}
-          {pathname !== "/main/register" && (
+          {isLoggedIn && (
             <li>
-              <Link
-                href="/main/register"
-                className={`block px-4 py-2 ${
-                  isActive("/main/register") ? "text-orange-400 font-bold underline" : "text-gray-300"
-                } hover:text-white`}
+              <button
+                onClick={handleLogout}
+                className="block px-4 py-2 rounded-xl text-white bg-orange-600 hover:bg-orange-700 font-semibold shadow transition"
               >
-                Register
-              </Link>
+                Logout
+              </button>
             </li>
           )}
         </ul>
