@@ -3,6 +3,7 @@ import { useState } from "react";
 import NavigationBar from "@/app/pages/parts/navigation/navigation-bar";
 import BackgroundWrapper from "../front-end/background-wrapper/background-wrapper";
 import { useRouter } from "next/navigation";
+import sha256 from "crypto-js/sha256";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -21,12 +22,13 @@ export default function Login() {
     setLoading(true);
 
     try {
+      const hashedPassword = sha256(form.password).toString();
       const res = await fetch("/api/login-api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           account_email: form.email,
-          account_password: form.password,
+          account_password: hashedPassword,
         }),
       });
 

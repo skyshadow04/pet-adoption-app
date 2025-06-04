@@ -2,6 +2,8 @@
 import NavigationBar from "@/app/pages/parts/navigation/navigation-bar";
 import BackgroundWrapper from "@/app/main/front-end/background-wrapper/background-wrapper";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import sha256 from "crypto-js/sha256";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -12,6 +14,8 @@ export default function Register() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Simple PH number validation: starts with 09 or +639, 11 digits
   const isValidPHNumber = (num: string) => /^(\+639|09)\d{9}$/.test(num);
@@ -21,34 +25,59 @@ export default function Register() {
     setError(""); // clear error on change
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    // Basic validation
-    if (!form.name || !form.email || !form.password || !form.contact) {
-      setError("All fields are required.");
-      return;
-    }
-    if (!isValidPHNumber(form.contact)) {
-      setError("Enter a valid Philippine mobile number.");
-      return;
-    }
-    if (form.password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
+      // Basic validation
+      if (!form.name || !form.email || !form.password || !form.contact) {
+        setError("All fields are required.");
+        return;
+      }
+      if (!isValidPHNumber(form.contact)) {
+        setError("Enter a valid Philippine mobile number.");
+        return;
+      }
+      if (form.password.length < 6) {
+        setError("Password must be at least 6 characters.");
+        return;
+      }
 
-    // Simulate API call
-    setTimeout(() => {
-      setSubmitted(true);
-    }, 1000);
-  };
+      setLoading(true);
+      setError("");
+
+      try {
+        // Hash the password before sending
+        const hashedPassword = sha256(form.password).toString();
+
+        const res = await fetch("/api/register-api", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            account_name: form.name,
+            account_email: form.email,
+            account_password: hashedPassword,
+            account_con_number: form.contact,
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          setSubmitted(true);
+          setForm({ name: "", email: "", password: "", contact: "" });
+        } else {
+          setError(data.message || "Registration failed.");
+        }
+      } catch (err) {
+        setError("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <>
       <NavigationBar />
       <BackgroundWrapper>
-        <section className="flex flex-col items-center justify-center min-h-screen px-4  dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <section className="flex flex-col items-center justify-center min-h-screen px-4 bg-white dark:bg-gray-900">
           <div className="relative bg-white/90 dark:bg-gray-900/90 shadow-2xl rounded-3xl p-10 max-w-md w-full mt-16 mb-16 overflow-hidden">
             {/* Decorative gradient blur */}
             <div className="absolute -top-10 -left-10 w-32 h-32 bg-orange-400 opacity-20 rounded-full blur-2xl pointer-events-none" />
@@ -142,6 +171,7 @@ export default function Register() {
                   type="submit"
                   className="w-full py-3 rounded-full bg-orange-600 hover:bg-orange-700 text-white font-semibold shadow-lg transition-all duration-200 flex items-center justify-center"
                   disabled={
+                    loading ||
                     !form.name ||
                     !form.email ||
                     !form.password ||
@@ -150,7 +180,7 @@ export default function Register() {
                     form.password.length < 6
                   }
                 >
-                  Register
+                  {loading ? "Registering..." : "Register"}
                 </button>
               </form>
             )}
