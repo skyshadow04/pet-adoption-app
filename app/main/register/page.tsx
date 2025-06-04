@@ -4,6 +4,7 @@ import BackgroundWrapper from "@/app/main/front-end/background-wrapper/backgroun
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import sha256 from "crypto-js/sha256";
+import { randomBytes } from "crypto";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -48,6 +49,7 @@ export default function Register() {
       try {
         // Hash the password before sending
         const hashedPassword = sha256(form.password).toString();
+        const verification_token = randomBytes(32).toString("hex");
 
         const res = await fetch("/api/register-api", {
           method: "POST",
@@ -57,6 +59,8 @@ export default function Register() {
             account_email: form.email,
             account_password: hashedPassword,
             account_con_number: form.contact,
+            account_verified: false,
+            verification_token,
           }),
         });
         const data = await res.json();

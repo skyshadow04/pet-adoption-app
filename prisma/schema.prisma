@@ -23,6 +23,7 @@ model pet_adopt_account {
   account_created_date DateTime @default(now())
   account_valid        Boolean  @default(true)
   account_verified     Boolean  @default(false)
+  verification_token   String?
 }
 
 model contact_submissions {

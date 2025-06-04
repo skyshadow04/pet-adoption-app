@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   try {
-    const { account_name, account_email, account_password, account_con_number } = await request.json();
+    const { account_name, account_email, account_password, account_con_number, verification_token } = await request.json();
 
     // Check if email already exists
     const existing = await prisma.pet_adopt_account.findUnique({
@@ -22,6 +22,8 @@ export async function POST(request: Request) {
         account_email,
         account_password, // In production, hash the password!
         account_con_number,
+        account_verified: false,
+        verification_token: verification_token
       },
     });
 
