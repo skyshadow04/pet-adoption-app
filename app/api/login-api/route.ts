@@ -17,6 +17,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, message: "Invalid credentials" }, { status: 401 });
     }
 
+    if (!user.account_verified) {
+      return NextResponse.json({ ok: false, message: "Please verify your email before logging in." }, { status: 403 });
+    }
+
     // Success: return user data (omit password in production)
     return NextResponse.json({
       ok: true,
